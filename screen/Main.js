@@ -1,8 +1,8 @@
 import React, { useState} from "react";
-import {View, Text, TextInput, Button, Stylesheet, Alert} from 'react-native'
+import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 
-const Main = () =>{
-    // Hacer un menu visual para que el usuario pueda seleccionar las opciones registrar un producto, registrar una venta, ver productos, ver ventas, ver categorias, registrar categoria
+
+const Main = ({navigation}) => {
     const [selectedOption, setSelectedOption] = useState(null);
 
     const handleOptionPress = (option) => {
@@ -11,19 +11,47 @@ const Main = () =>{
     };
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text style={{ fontSize: 24, marginBottom: 20 }}>Menú Principal</Text>
-            <Button title="Ver Productos" onPress={() => handleOptionPress('Productos')} />
-            <Button title="Ver Ventas" onPress={() => handleOptionPress('Ventas')} />
-            <Button title="Ver Categorías" onPress={() => handleOptionPress('Categorías')} />
-            
-        </View>
-    );
+        <View style={styles.container}>
+            <Text style={styles.title}>Bienvenido a tu Menú Principal</Text>
+            <View style={styles.buttonContainer}>
+                <Button title="Ver Productos" onPress={() => navigation.navigate('Productos')} color="#1f4f66" />
 
+            </View>
+            <View style={styles.buttonContainer}>
+                <Button title="Ver Ventas" onPress={() => navigation.navigate('ListaVentas')} color="#1f4f66" />
+            </View>
+            <View style={styles.buttonContainer}>
+                <Button title="Registrar Categoría" onPress={() => navigation.navigate('Categorias')} color="#1f4f66" />
+            </View>
+        </View>
+  );
 
     
     
 }
+const styles =StyleSheet.create({
+    container: {
+    flex: 1,
+    backgroundColor: '#f2f2f2', // fondo claro y elegante
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#1f4f66',
+    marginBottom: 40,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    width: '80%',
+    marginVertical: 10,
+    borderRadius: 8,
+    overflow: 'hidden', // para que el botón respete bordes redondeados
+  },
+
+})
 
 
 export default Main;
