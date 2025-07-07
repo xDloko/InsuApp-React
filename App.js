@@ -3,15 +3,19 @@ import React from 'react';
 import 'react-native-gesture-handler';
 
 import Main from "./screen/Main";
-import ProductosScreen from "./screen/ProductosScreen";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+
+import ProductosScreen from "./screen/ProductosScreen";
 import ListaProductosScreen from './screen/ListaProductosScreen';
 import CategoriaScreen from "./screen/CategoriaScreen";
 import VentasScreen from "./screen/VentasScreen";
 import ListaVentasScreen from "./screen/ListaVentasScreen";
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   return (
@@ -57,17 +61,25 @@ export default function App() {
       }}
       options={{ useNewConnection: false }}
     >
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Main">
-          <Stack.Screen name="Main" component={Main} options={{ title: 'Menú Principal' }} />
-          <Stack.Screen name="Productos" component={ProductosScreen} options={{ title: 'Productos' }} />
-          <Stack.Screen name="ListaProductos" component={ListaProductosScreen} options={{ title: 'Lista de Productos' }} />
-          <Stack.Screen name="Categorias" component={CategoriaScreen} options={{ title: 'Categorías' }} />
-          <Stack.Screen name="Venta" component={VentasScreen} options={{ title: 'Ventas' }} />
-          <Stack.Screen name="ListaVentas" component={ListaVentasScreen} options={{ title: 'ListaVentas' }} />
-          {/* Aquí puedes agregar más screens (ventas, etc.) */}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationContainer>
+          <Drawer.Navigator
+            initialRouteName="Main"
+            screenOptions={{
+              headerShown: true,
+              drawerType: 'slide',
+              // Puedes añadir estilos: drawerStyle: { width: 240 }
+            }}
+          >
+            <Drawer.Screen name="Main" component={Main} options={{ drawerLabel: 'Principal' }} />
+            <Drawer.Screen name="Productos" component={ProductosScreen} options={{ drawerLabel: 'Productos' }} />
+            <Drawer.Screen name="ListaProductos" component={ListaProductosScreen} options={{ drawerLabel: 'Lista Productos' }} />
+            <Drawer.Screen name="Categorias" component={CategoriaScreen} options={{ drawerLabel: 'Categorías' }} />
+            <Drawer.Screen name="Ventas" component={VentasScreen} options={{ drawerLabel: 'Ventas' }} />
+            <Drawer.Screen name="ListaVentas" component={ListaVentasScreen} options={{ drawerLabel: 'Lista Ventas' }} />
+          </Drawer.Navigator>
+        </NavigationContainer>
+      </GestureHandlerRootView>
     </SQLiteProvider>
   );
 }
